@@ -1,0 +1,17 @@
+# Render blueprint — alternative host. NOTE: free web services spin down
+# when idle; a cold start can eat into the 60-second task deadline, so a
+# paid/always-on instance (or Railway) is safer during scored rounds.
+services:
+  - type: web
+    name: agent-games-gatekeeper
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: AGENT_GAMES_HMAC_SECRET
+        sync: false
+      - key: AGENT_GAMES_HMAC_FORMAT
+        value: hex
+      - key: GATEKEEPER_TASK_ID_MODE
+        value: keccak
